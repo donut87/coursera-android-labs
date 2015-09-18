@@ -20,15 +20,9 @@ public class ActivityOne extends Activity {
 	// String for LogCat documentation
 	private final static String TAG = "Lab-ActivityOne";
 
-    public int mCreate, mRestart, mStart, mResume;
-
-    private TextView mTvCreate, mTvRestart, mTvStart, mTvResume;
-
 	// Lifecycle counters
-
-	// TODO: Create variables for each of the TextViews
-	// named mTvCreate, mTvRestart, mTvStart, mTvResume.
-	// for displaying the current count of each counter variable
+	private int mCreate, mRestart, mStart, mResume;
+	private TextView mTvCreate, mTvRestart, mTvStart, mTvResume;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +45,8 @@ public class ActivityOne extends Activity {
 
 				// Create an intent stating which Activity you would like to
 				// start
-				Intent intent = null;
+				Intent intent = new Intent(ActivityOne.this, ActivityTwo.class);
+				startActivity(intent);
 
 				// Launch the Activity using the intent
 
@@ -60,19 +55,16 @@ public class ActivityOne extends Activity {
 
 		// Has previous state been saved?
 		if (savedInstanceState != null) {
-
-			// TODO:
-			// Restore value of counters from saved state
-			// Only need 4 lines of code, one for every count variable
+			mCreate = savedInstanceState.getInt(CREATE_KEY);
+			mRestart = savedInstanceState.getInt(RESTART_KEY);
+			mStart = savedInstanceState.getInt(START_KEY);
+			mResume = savedInstanceState.getInt(RESUME_KEY);
 
 		}
 
 		// Emit LogCat message
 		Log.i(TAG, "Entered the onCreate() method");
 
-		// TODO:
-		// Update the appropriate count variable
-		// Update the user interface via the displayCounts() method
         ++mCreate;
         displayCounts();
 
@@ -139,11 +131,10 @@ public class ActivityOne extends Activity {
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("mCreate", mCreate);
-        savedInstanceState.putInt("mRestart", mRestart);
-        savedInstanceState.putInt("mStart", mStart);
-        savedInstanceState.putInt("mResume", mResume);
-
+        savedInstanceState.putInt(CREATE_KEY, mCreate);
+        savedInstanceState.putInt(RESTART_KEY, mRestart);
+        savedInstanceState.putInt(START_KEY, mStart);
+        savedInstanceState.putInt(RESUME_KEY, mResume);
 	}
 
 	// Updates the displayed counters
